@@ -30,7 +30,7 @@ const AudioPlayer = () => {
     <div className="audio-player">
       <div>
        {music.length==0?<p>carregando...</p>:<div className="inner">
-         <DisplayTrack {...{currentTrack,audioRef,setDuration,progressBarRef}}/>
+         <DisplayTrack {...{currentTrack,audioRef,setDuration,progressBarRef,indexMusic,music}}/>
          <div className="innerControls">
            <Controls {...{audioRef, progressBarRef, duration, setTimeProgress,setCurrentTrack,setindexMusic,music,indexMusic,setTitle}} />
         <ProgressBar {...{progressBarRef,audioRef,timeProgress,duration}}/>

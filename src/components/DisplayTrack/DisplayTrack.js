@@ -1,7 +1,7 @@
 import "./index.css"
 import { BsMusicNoteBeamed } from 'react-icons/bs';
 
-const DisplayTrack = ({ currentTrack, audioRef,setDuration,progressBarRef }) => {
+const DisplayTrack = ({ currentTrack, audioRef,setDuration,progressBarRef,indexMusic,music }) => {
     const onLoadedMetadata = () => {
       const seconds = audioRef.current.duration;
       setDuration(seconds);
@@ -26,6 +26,7 @@ const DisplayTrack = ({ currentTrack, audioRef,setDuration,progressBarRef }) => 
         <div className="text">
           <p className="title">{currentTrack.title}</p>
           <p>{currentTrack.author? currentTrack.author : "desconhecido"}</p>
+          <p>{indexMusic + 1}/{music.length}</p>
         </div>
       </div>
     </div>

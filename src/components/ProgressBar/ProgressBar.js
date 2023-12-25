@@ -1,3 +1,4 @@
+import { useCallback,useEffect } from "react";
 import "./index.css"
 const ProgressBar = ({ progressBarRef,audioRef,timeProgress,duration }) => {
     const handleProgressChange = () => {
@@ -15,10 +16,14 @@ const ProgressBar = ({ progressBarRef,audioRef,timeProgress,duration }) => {
         }
         return '00:00';
       };
+      let ct = formatTime(timeProgress);
+      let t = formatTime(duration);
+     
     return (
       <div className="progress">
        <div className="timers">
        <span className="time current">{formatTime(timeProgress)}</span>
+       
         <span className="time">{formatTime(duration)}</span> 
        </div>
         <input type="range" onChange={handleProgressChange} defaultValue={0} ref={progressBarRef} />

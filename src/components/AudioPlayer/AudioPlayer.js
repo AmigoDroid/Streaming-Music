@@ -25,14 +25,35 @@ const AudioPlayer = () => {
       setTitle(resolve[0].title)
     })  
     
-  },[setCurrentTrack,setMusic,indexMusic])
+  },[setCurrentTrack,setMusic,indexMusic]);
+
+  const nextMusic = ()=>{
+    if(indexMusic == music.length -1){
+      setCurrentTrack(music[0])
+      setindexMusic(0)
+    }else{
+      setindexMusic(indexMusic + 1)
+      setCurrentTrack(music[indexMusic]) 
+    }
+  };
+  const backMusic = ()=>{
+    if(indexMusic==0){
+      setCurrentTrack(music[music.length - 1])
+      setindexMusic(music.length -1);
+    }else{
+      setindexMusic(indexMusic -1)
+      setCurrentTrack(music[indexMusic])
+    }
+  };
+
+
   return (
     <div className="audio-player">
       <div>
        {music.length==0?<p>carregando...</p>:<div className="inner">
          <DisplayTrack {...{currentTrack,audioRef,setDuration,progressBarRef,indexMusic,music}}/>
          <div className="innerControls">
-           <Controls {...{audioRef, progressBarRef, duration, setTimeProgress,setCurrentTrack,setindexMusic,music,indexMusic,setTitle}} />
+           <Controls {...{audioRef, progressBarRef, duration, setTimeProgress,nextMusic,backMusic,music,indexMusic,setTitle}} />
         <ProgressBar {...{progressBarRef,audioRef,timeProgress,duration}}/>
          </div>
        </div>}

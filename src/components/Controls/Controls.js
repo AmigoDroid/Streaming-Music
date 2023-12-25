@@ -11,50 +11,45 @@ import {
   IoPauseSharp,
 } from 'react-icons/io5';
 
-const Controls = ({audioRef,progressBarRef,duration,setTimeProgress,setCurrentTrack,setindexMusic,music,indexMusic,setTitle}) => {
+const Controls = ({audioRef,progressBarRef,duration,setTimeProgress,nextMusic,backMusic,music,indexMusic,setTitle}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const playAnimationRef = useRef();
+
+
+
+
   const togglePlayPause = () => {
     setIsPlaying((prev) => !prev);
   };
   const repeat = useCallback(()=>{
+   
     const currentTime = audioRef.current.currentTime;
     progressBarRef.current.value = currentTime;
     progressBarRef.current.style.setProperty(
       '--range-progress',
       `${(progressBarRef.current.value / duration) * 100}%`
     );
+    
     setTimeProgress(currentTime);
+    if(audioRef.current.currentTime>0 && duration>0 && audioRef.current.currentTime == duration){
+      nextMusic()
+    }
     playAnimationRef.current = requestAnimationFrame(repeat);
   }, [audioRef, duration, progressBarRef, setTimeProgress]);
    
   useEffect(() => {
     if (isPlaying) {
       audioRef.current.play();
+     
     } else {
       audioRef.current.pause();
     }
+    
     playAnimationRef.current = requestAnimationFrame(repeat);
     setTitle(music[indexMusic].title)
-  }, [isPlaying, audioRef,repeat,setTitle,indexMusic,music]);
-  const nextMusic = ()=>{
-    if(indexMusic == music.length -1){
-      setCurrentTrack(music[0])
-      setindexMusic(0)
-    }else{
-      setindexMusic(indexMusic + 1)
-      setCurrentTrack(music[indexMusic]) 
-    }
-  };
-  const backMusic = ()=>{
-    if(indexMusic==0){
-      setCurrentTrack(music[music.length - 1])
-      setindexMusic(music.length -1);
-    }else{
-      setindexMusic(indexMusic -1)
-      setCurrentTrack(music[indexMusic])
-    }
-  };
+  }, [isPlaying, audioRef,repeat,setTitle,indexMusic,music,audioRef]);
+  
+
   return (
     <div className="controls-wrapper">
       <div className="controls">
